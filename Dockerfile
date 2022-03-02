@@ -7,8 +7,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /etc/app/cat-api
 COPY renv.lock .
 
-ENV RENV_CONFIG_PAK_ENABLED=TRUE
-RUN install2.r renv pak
+RUN install2.r renv
 RUN Rscript -e "renv::restore()"
 
 COPY data ./data
