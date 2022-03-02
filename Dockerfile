@@ -1,12 +1,14 @@
-FROM rocker/shiny-verse:latest
+FROM r-base:latest
 
 RUN apt-get update && apt-get install -y \
-    libsodium-dev
+    libsodium-dev \
+    libcurl4-openssl-dev
 
 WORKDIR /etc/app/cat-api
 COPY renv.lock .
 
-RUN install2.r renv
+ENV RENV_CONFIG_PAK_ENABLED=TRUE
+RUN install2.r renv pak
 RUN Rscript -e "renv::restore()"
 
 COPY data ./data
