@@ -1,0 +1,33 @@
+domain;subdomain;subdomain_num;screener;question
+identity;id_sense;1;id_sense1;Do you sometimes have the experience of not really knowing who you are or how you are unique in the world? (Tell me about that.)
+identity;id_sense;1;id_sense2;Do you sometimes find yourself wishing you were someone else? (Tell me about that.)
+identity;id_esteem;2;id_esteem1;What kinds of situations or people have the potential to affect how you feel about yourself? Tell me about that.
+identity;id_emo;3;id_emo1;Are you an emotional person?
+identity;id_emo;3;id_emo2;How do you deal with having strong feelings about things?
+self-direction;dir_goals;4;dir_goals1;Are you clear on what you want to accomplish for yourself in your life? Tell me about that.
+self-direction;dir_goals;4;dir_goals2;Do you know how to get ahead?
+self-direction;dir_values;5;dir_values1;Tell me about what kinds of standards you have set for yourself in terms of your behavior and morals.
+self-direction;dir_values;5;dir_values2;Do you have a good idea about how you should behave and what you need to do to have a successful and fulfilling life?
+self-direction;dir_selfref;6;dir_selfref1;How well do you know how your mind works?that is, how you think about things?
+self-direction;dir_selfref;6;dir_selfref2;Is it hard to think about things when you become emotional or anxious? (IF YES: Can you describe what that is like for you?)
+empathy;emp_appr;7;emp_appr1;Is it easy for you to understand where other people are coming from?
+empathy;emp_appr;7;emp_appr2;How important is it to you to know what other people's concerns and experiences are?
+empathy;emp_appr;7;emp_appr3;Do you usually know what makes other people tick and why they do the things they do?
+empathy;emp_appr;7;emp_appr4;Have you found it easy to understand your partner in romantic relationships?
+empathy;emp_tol;8;emp_tol1;How do you deal with people who have opinions that are really different from yours?
+empathy;emp_tol;8;emp_tol2;How has it been for you if a partner or spouse has disagreed with you?
+empathy;emp_eff;9;emp_eff1;How much impact do you think your actions have on other people?
+empathy;emp_eff;9;emp_eff2;Do you wonder sometimes why your partner or spouse reacts to you in certain ways?
+intimacy;int_depth;10;int_depth1;Tell me about some important relationships you have in your life.
+intimacy;int_depth;10;int_depth1.1;IF TALKS ABOUT ONLY FAMILY MEMBERS: Do you have good friends outside your family?
+intimacy;int_depth;10;int_depth1.2;IF ONLY TALKS ABOUT ONE OR TWO PEOPLE: Are there other people in your life you are close to?
+intimacy;int_depth;10;int_depth1.3;IF NO ROMANTIC RELATIONSHIPS HAVE BEEN MENTIONED UP TO THIS POINT: Have you had satisfying romantic relationships?
+intimacy;int_cap;11;int_cap1;Do you like to get to know other people?
+intimacy;int_cap;11;int_cap2;Is it easy for you to open up in relationships?
+intimacy;int_cap;11;int_cap3;Do you think you let other people get to know the real you?
+intimacy;int_cap;11;int_cap4;Do you feel close to your spouse or partner? (IF NOT CURRENTLY IN A RELATIONSHIP, ASK ABOUT RECENT PAST.)
+intimacy;int_cap;11;int_cap5;Do you and your partner know each other really well?
+intimacy;int_mut;12;int_mut1;Do you find it easy to get along with most people?
+intimacy;int_mut;12;int_mut2;Do you like to do things with friends and family?
+intimacy;int_mut;12;int_mut3;Do you and your spouse or partner treat each other with support and respect? (IF INTERVIEWEE NOT IN A RELATIONSHIP RIGHT NOW, CAN ASK ABOUT RECENT PAST.)
+intimacy;int_mut;12;int_mut4;Do you readily help each other out with chores, projects, and other responsibilities?

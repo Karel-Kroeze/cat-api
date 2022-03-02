@@ -1,0 +1,118 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "description": "Provides functions for administering a computerized adaptive version of the xxx.",
+        "title": "Computerized Adaptive Testing",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/next_item": {
+            "post": {
+                "summary": "Record user response",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "next_item": {
+                                            "type": "integer",
+                                            "example": 6
+                                        },
+                                        "completed": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "estimate": {
+                                            "type": "number",
+                                            "example": 2.13
+                                        },
+                                        "variance": {
+                                            "type": "number",
+                                            "example": 0.23
+                                        }
+                                    },
+                                    "required": [
+                                        "completed",
+                                        "estimate",
+                                        "variance"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "error description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prior": {
+                                        "$ref": "#/components/schemas/Prior"
+                                    },
+                                    "admistered": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/AdministeredItem"
+                                        },
+                                        "example": [
+                                            {
+                                                "item_id": 3,
+                                                "response": 2
+                                            },
+                                            {
+                                                "item_id": 8
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Prior": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 4,
+                "default": 2
+            },
+            "AdministeredItem": {
+                "type": "object",
+                "properties": {
+                    "item_id": {
+                        "type": "integer"
+                    },
+                    "response": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "item_id"
+                ],
+                "example": {
+                    "item_id": 3,
+                    "response": 2
+                }
+            }
+        }
+    }
+}
