@@ -1,0 +1,14 @@
+networks:
+  proxy:
+    name: proxy
+    external: true
+
+services:
+  api:
+    build: .
+    networks:
+      - proxy
+    environment:
+      - VIRTUAL_HOST=cat-api.home.karel-kroeze.nl
+      - LETSENCRYPT_HOST=cat-api.home.karel-kroeze.nl
+      - LETSENCRYPT_EMAIL=karel.kroeze@gmail.com
