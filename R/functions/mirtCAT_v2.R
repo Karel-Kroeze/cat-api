@@ -23,7 +23,7 @@ custom_update_thetas_prior <- function(design, person, test) {
   adjusted_scores <- fscores(mo,
     response.pattern = responses,
     custom_den = custom_density_function_prior,
-    prior = prior,
+    prior = .prior,
     method = "MAP"
   )
 
@@ -87,7 +87,7 @@ run_cat <- function(data, prior, responses) {
   cat_instance <- mirtCAT(
     df = person_response_data, mo = data$model, start_item = "Trule",
     method = "MAP", criteria = "MI", design = design,
-    design_elements = TRUE
+    design_elements = TRUE, prior = prior
   )
 
   # update theta and se for items answered so far

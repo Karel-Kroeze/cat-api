@@ -29,15 +29,15 @@
                                             "type": "number",
                                             "example": 2.13
                                         },
-                                        "variance": {
+                                        "se": {
                                             "type": "number",
-                                            "example": 0.23
+                                            "example": 0.451
                                         }
                                     },
                                     "required": [
                                         "completed",
                                         "estimate",
-                                        "variance"
+                                        "se"
                                     ]
                                 }
                             }
@@ -75,7 +75,8 @@
                                                 "response": 2
                                             },
                                             {
-                                                "item_id": 8
+                                                "item_id": 8,
+                                                "response": 1
                                             }
                                         ]
                                     }
@@ -105,7 +106,7 @@
                         "type": "integer"
                     }
                 },
-                "required": ["item_id"],
+                "required": ["item_id", "response"],
                 "example": {
                     "item_id": 3,
                     "response": 2

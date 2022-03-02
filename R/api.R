@@ -22,26 +22,27 @@ function(pr) {
 #* @param responses:array(int) array of responses, where each response is an object containing the item id, and - if applicable - the recorded response
 #* @serializer unboxedJSON
 function(prior, administered) {
-  prior <- set_prior(prior)
-  cat <- run_cat(cat_data, prior, administered)
+  # TODO: figure out how to inject prior without making it a global
+  .prior <<- set_prior(prior)
+  cat <- run_cat(cat_data, .prior, administered)
 
   # calculate estimate
   estimate <- extract.mirtCAT(cat$person, "thetas") %>% drop()
-  variance <- extract.mirtCAT(cat$person, "thetas_SE") %>% drop()
+  se <- extract.mirtCAT(cat$person, "thetas_SE") %>% drop()
 
   # if applicable, calculate next item
-  if (nrow(administered) >= 12) {
+  if (nrow(administered) >= 12 || se <= .316) {
     result <- list(
       complete = TRUE,
       estimate = estimate,
-      variance = variance
+      se = se
     )
   } else {
     result <- list(
       complete = FALSE,
       next_item = mirtCAT::findNextItem(cat),
       estimate = estimate,
-      variance = variance
+      se = se
     )
   }
 
