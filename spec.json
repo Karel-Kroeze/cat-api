@@ -64,7 +64,7 @@
                                     "prior": {
                                         "$ref": "#/components/schemas/Prior"
                                     },
-                                    "admistered": {
+                                    "administered": {
                                         "type": "array",
                                         "items": {
                                             "$ref": "#/components/schemas/AdministeredItem"
@@ -105,9 +105,7 @@
                         "type": "integer"
                     }
                 },
-                "required": [
-                    "item_id"
-                ],
+                "required": ["item_id"],
                 "example": {
                     "item_id": 3,
                     "response": 2
