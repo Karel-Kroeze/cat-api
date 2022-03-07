@@ -1,12 +1,6 @@
 library(plumber)
 source("./functions/mirtCAT_v2.R")
-
 cat_data <- setup_cat_data()
-#
-# #* @filter log
-# function(req, res) {
-#   print(req$location)
-# }
 
 #* @apiTitle Computerized Adaptive Testing
 #* @apiDescription Provides functions for administering a computerized adaptive version of the xxx.
@@ -14,6 +8,30 @@ cat_data <- setup_cat_data()
 #* @plumber
 function(pr) {
   pr$setApiSpec(jsonlite::read_json("../spec.json"))
+}
+
+#* @filter log
+function(req, res) {
+  cat(req$REMOTE_ADDR, "\t", req$REQUEST_METHOD, "\t", req$PATH_INFO, "\n")
+
+  plumber::forward()
+}
+
+#* @filter cors
+# https://github.com/rstudio/plumber/issues/66#issuecomment-418660334
+# effectively disable CORS, by allowing everything.
+# TODO: whitelist domain if not the same, or ideally lock down CORS again if on the same host
+function(req, res) {
+  res$setHeader("Access-Control-Allow-Origin", "*")
+  
+  if (req$REQUEST_METHOD == "OPTIONS") {
+    res$setHeader("Access-Control-Allow-Methods","*")
+    res$setHeader("Access-Control-Allow-Headers", req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
+    res$status <- 200 
+    return(list())
+  } else {
+    plumber::forward()
+  }
 }
 
 #* Record user response
