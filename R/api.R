@@ -12,7 +12,7 @@ function(pr) {
 
 #* @filter log
 function(req, res) {
-  cat(req$REMOTE_ADDR, "\t", req$REQUEST_METHOD, "\t", req$PATH_INFO, "\n")
+  cat(req$REMOTE_ADDR, "\t", req$REQUEST_METHOD, "\t", req$PATH_INFO, "\t", req$HTTP_USER_AGENT, "\n")
 
   plumber::forward()
 }
@@ -22,7 +22,12 @@ function(req, res) {
 # effectively disable CORS, by allowing everything.
 # TODO: whitelist domain if not the same, or ideally lock down CORS again if on the same host
 function(req, res) {
-  res$setHeader("Access-Control-Allow-Origin", "*")
+  if(!is.null(req$HTTP_ORIGIN)) {
+    cat("CORS ::", req$HTTP_ORIGIN, "::", req$REQUEST_METHOD, "\n")
+    res$setHeader("Access-Control-Allow-Origin", req$HTTP_ORIGIN)
+  } else {
+    res$setHeader("Access-Control-Allow-Origin", "*")
+  }
   
   if (req$REQUEST_METHOD == "OPTIONS") {
     res$setHeader("Access-Control-Allow-Methods","*")
