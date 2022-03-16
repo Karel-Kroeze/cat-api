@@ -41,6 +41,7 @@ function(req, res) {
 
 #* Record user response
 #* @post /next_item
+#* @get /next_item
 #* @param prior:int integer in range [0,4], score on preliminary questions.
 #* @param responses:array(int) array of responses, where each response is an object containing the item id, and - if applicable - the recorded response
 #* @serializer unboxedJSON
@@ -70,4 +71,13 @@ function(prior, administered) {
   }
 
   invisible(result)
+}
+
+#* Create parameter estimate graph
+#* @get /estimate_plot
+#* @param estimate:double participant theta estimate as returned by `/next_item`
+#* @param se:double() standard error of estimate, as returned by `/next_item`
+#* @serializer svg
+function(estimate, se) {
+  
 }
