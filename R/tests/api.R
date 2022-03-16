@@ -12,17 +12,20 @@ PORT <- 4321
 
 PRIOR <- 0
 PATTERN <- data.frame(
-  item_id = c(3,8),
-  response = c(2,1)
+  item_id = c(3, 8),
+  response = c(2, 1)
 )
 
 # get estimate and next_item from API
 response <- httr::POST(
-  HOST, port = PORT, path = "next_item", httr::content_type("application/json"),
+  HOST,
+  port = PORT, path = "next_item", httr::content_type("application/json"),
   body = list(
     prior = PRIOR,
-    administered = PATTERN),
-  encode = "json")
+    administered = PATTERN
+  ),
+  encode = "json"
+)
 httr::content(response)
 
 # get estimate 'directly' (ish)
