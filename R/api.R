@@ -154,7 +154,7 @@ function(estimate,
 #* @get /estimate_plot.svg
 #* @param estimate:double participant theta estimate as returned by `/next_item`
 #* @param se:double standard error of estimate, as returned by `/next_item`
-#* @serializer svg list(bg = "transparent")
+#* @serializer svg list(bg = "transparent", width = 8, height = 4.5)
 function(estimate,
          se,
          cutoffs = c(-1.5,-.4, .54, 1.83),
