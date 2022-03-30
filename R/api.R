@@ -50,6 +50,11 @@ function(req, res) {
 function(prior, administered) {
   # TODO: figure out how to inject prior without making it a global
   .prior <<- set_prior(prior)
+
+  # cast administered as a data.frame even if the list is empty
+  administered <- as.data.frame(administered)
+
+  # create  cat design, then update with administered items
   cat <- run_cat(cat_data, .prior, administered)
 
   # calculate estimate
@@ -58,11 +63,9 @@ function(prior, administered) {
 
   # if applicable, calculate next item
   if (nrow(administered) >= 12 || se <= .316) {
-    result <- list(
-      complete = TRUE,
-      estimate = estimate,
-      se = se
-    )
+    result <- list(complete = TRUE,
+                   estimate = estimate,
+                   se = se)
   } else {
     result <- list(
       complete = FALSE,
