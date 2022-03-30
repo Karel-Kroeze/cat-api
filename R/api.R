@@ -166,6 +166,9 @@ function(estimate,
   # cast to numerics
   estimate <- as.numeric(estimate)
   se <- as.numeric(se)
+  cutoffs <- as.numeric(cutoffs)
+  range <- as.numeric(range)
+  points <- as.numeric(points)
 
   # Plot parameters
   points_y <-
