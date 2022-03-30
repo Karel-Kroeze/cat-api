@@ -160,6 +160,7 @@ function(estimate,
          cutoffs = c(-1.5,-.4, .54, 1.83),
          range = c(-3, 3),
          points = 20,
+         background = "transparent",
          stroke_colour = "#2F4CD4",
          fill_colour = "#7080EB") {
   # cast to numerics
@@ -188,7 +189,7 @@ function(estimate,
       stackdir = "center"
     ) +
     theme(
-      panel.background = element_rect(fill = "transparent", colour = "transparent"),
+      panel.background = element_rect(fill = background, colour = "transparent"),
       panel.grid = element_blank(),
       axis.line = element_blank(),
       axis.text = element_blank(),
