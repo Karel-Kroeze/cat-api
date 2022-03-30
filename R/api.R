@@ -14,7 +14,16 @@ function(pr) {
 
 #* @filter log
 function(req, res) {
-  cat(req$REMOTE_ADDR, "\t", req$REQUEST_METHOD, "\t", req$PATH_INFO, "\t", req$HTTP_USER_AGENT, "\n")
+  cat(
+    req$REMOTE_ADDR,
+    "\t",
+    req$REQUEST_METHOD,
+    "\t",
+    req$PATH_INFO,
+    "\t",
+    req$HTTP_USER_AGENT,
+    "\n"
+  )
 
   plumber::forward()
 }
@@ -33,7 +42,8 @@ function(req, res) {
 
   if (req$REQUEST_METHOD == "OPTIONS") {
     res$setHeader("Access-Control-Allow-Methods", "*")
-    res$setHeader("Access-Control-Allow-Headers", req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
+    res$setHeader("Access-Control-Allow-Headers",
+                  req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
     res$status <- 200
     return(list())
   } else {
@@ -79,11 +89,15 @@ function(prior, administered) {
 }
 
 #* Create parameter estimate graph
-#* @get /estimate_plot.svg
+#* @get /normal_estimate_plot.svg
 #* @param estimate:double participant theta estimate as returned by `/next_item`
 #* @param se:double standard error of estimate, as returned by `/next_item`
 #* @serializer svg list(bg = "transparent")
-function(estimate, se, precision = .01, xmin = -3, xmax = 3) {
+function(estimate,
+         se,
+         precision = .01,
+         xmin = -3,
+         xmax = 3) {
   estimate <- as.numeric(estimate)
   se <- as.numeric(se)
   precision <- as.numeric(precision)
@@ -96,15 +110,29 @@ function(estimate, se, precision = .01, xmin = -3, xmax = 3) {
   y_range <- dnorm(ci_estimate)
   y_min <- min(y_range) - 0.02
   y_max <- max(y_range) + 0.02
-  area <- data.frame(x = c(rep(ci_estimate, each = 2), ci_estimate[1]), y = c(y_min, y_max, y_max, y_min, y_min))
+  area <-
+    data.frame(x = c(rep(ci_estimate, each = 2), ci_estimate[1]),
+               y = c(y_min, y_max, y_max, y_min, y_min))
 
 
   p <- ggplot(data.frame(theta, population)) +
     geom_polygon(aes(theta, population), fill = "#4091d3", alpha = .4) +
-    geom_polygon(aes(x, y), data = area, fill = "#50ac4d", alpha = .4) +
+    geom_polygon(aes(x, y),
+                 data = area,
+                 fill = "#50ac4d",
+                 alpha = .4) +
     # geom_path(aes(x, y), data = area, linetype = 4, colour = "#50ac4d") +
-    geom_segment(x = estimate, xend = estimate, y = y_min, yend = y_max, linetype = 2, colour = "#50ac4d") +
-    coord_cartesian(ylim = c(0.01, 0.6), xlim = range, expand = FALSE) +
+    geom_segment(
+      x = estimate,
+      xend = estimate,
+      y = y_min,
+      yend = y_max,
+      linetype = 2,
+      colour = "#50ac4d"
+    ) +
+    coord_cartesian(ylim = c(0.01, 0.6),
+                    xlim = range,
+                    expand = FALSE) +
     theme_minimal() +
     labs(x = "Score") +
     theme(
@@ -116,6 +144,57 @@ function(estimate, se, precision = .01, xmin = -3, xmax = 3) {
       axis.text.y = element_blank(),
       axis.title.y = element_blank(),
       plot.background = element_rect(fill = "#ffffff00", colour = "#ffffff00")
+    )
+
+  print(p)
+}
+
+
+#* Create parameter estimate graph
+#* @get /estimate_plot.svg
+#* @param estimate:double participant theta estimate as returned by `/next_item`
+#* @param se:double standard error of estimate, as returned by `/next_item`
+#* @serializer svg list(bg = "transparent")
+function(estimate,
+         se,
+         cutoffs = c(-1.5,-.4, .54, 1.83),
+         range = c(-3, 3),
+         points = 20,
+         stroke_colour = "#2F4CD4",
+         fill_colour = "#7080EB") {
+  # cast to numerics
+  estimate <- as.numeric(estimate)
+  se <- as.numeric(se)
+
+  # Plot parameters
+  points_y <-
+    qnorm(ppoints(points), estimate, se) # Figure out locations for the dots
+
+  # Create plot
+  p <- ggplot() +
+    coord_cartesian(ylim = range, expand = FALSE) +
+    geom_hline(yintercept = cutoffs,
+               color = "white",
+               size = .5) +
+    geom_dotplot(
+      aes(y = points_y, x = 0),
+      fill = fill_colour,
+      color = stroke_colour,
+      dotsize = 1.1,
+      width = 1.0,
+      binpositions = "bygroup",
+      binwidth = .25,
+      binaxis = "y",
+      stackdir = "center"
+    ) +
+    theme(
+      panel.background = element_rect(fill = "transparent", colour = "transparent"),
+      panel.grid = element_blank(),
+      axis.line = element_blank(),
+      axis.text = element_blank(),
+      axis.title = element_blank(),
+      axis.ticks = element_blank(),
+      plot.background = element_rect(fill = "transparent", colour = "transparent")
     )
 
   print(p)
