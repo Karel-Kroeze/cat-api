@@ -93,7 +93,7 @@ run_cat <- function(data, prior, responses) {
   # update theta and se for items answered so far
   # updateDesign does not take a vector as input
   # Does allow missing data in resp_answer
-  if (nrow(responses) > 1) { # skip and recommend start item if no items have been administered
+  if (nrow(responses) >= 1) { # skip and recommend start item if no items have been administered
     for (i in seq_len(nrow(responses))) {
       if (!is.null(responses[i, "response"]) &&
         !is.na(responses[i, "response"])) {
