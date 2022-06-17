@@ -72,7 +72,7 @@ function(prior, administered) {
   se <- extract.mirtCAT(cat$person, "thetas_SE") %>% drop()
 
   # calculate 'old scale' score
-  score <- round(3.8 / (1 + exp(1.25 * (.01 - theta))) * 2) / 2
+  score <- round(3.8 / (1 + exp(1.25 * (.01 - estimate))) * 2) / 2
 
   # if applicable, calculate next item
   if (nrow(administered) >= 12 || se <= .316) {
@@ -162,7 +162,7 @@ function(estimate,
 #* @serializer svg list(bg = "transparent", width = 8, height = 4.5)
 function(estimate,
          se,
-         cutoffs = c(-1.5,-.4, .54, 1.83),
+         cutoffs = c(-1.5, -.4, .54, 1.83),
          range = c(-3, 3),
          points = 20,
          background = "transparent",
