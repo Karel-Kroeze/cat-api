@@ -71,16 +71,21 @@ function(prior, administered) {
   estimate <- extract.mirtCAT(cat$person, "thetas") %>% drop()
   se <- extract.mirtCAT(cat$person, "thetas_SE") %>% drop()
 
+  # calculate 'old scale' score
+  score <- round(3.8 / (1 + exp(1.25 * (.01 - theta))) * 2) / 2
+
   # if applicable, calculate next item
   if (nrow(administered) >= 12 || se <= .316) {
     result <- list(complete = TRUE,
                    estimate = estimate,
+                   score = score,
                    se = se)
   } else {
     result <- list(
       complete = FALSE,
       next_item = mirtCAT::findNextItem(cat),
       estimate = estimate,
+      score = score,
       se = se
     )
   }
@@ -161,8 +166,8 @@ function(estimate,
          range = c(-3, 3),
          points = 20,
          background = "transparent",
-         stroke_colour = "#2F4CD4",
-         fill_colour = "#7080EB") {
+         stroke_colour = "#FFFFFF",
+         fill_colour = "#FFAB06") {
   # cast to numerics
   estimate <- as.numeric(estimate)
   se <- as.numeric(se)
@@ -171,8 +176,7 @@ function(estimate,
   points <- as.numeric(points)
 
   # Plot parameters
-  points_y <-
-    qnorm(ppoints(points), estimate, se) # Figure out locations for the dots
+  points_y <- qnorm(ppoints(points), estimate, se) # Figure out locations for the dots
 
   # Create plot
   p <- ggplot() +
