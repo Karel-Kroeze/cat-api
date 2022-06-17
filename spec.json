@@ -46,7 +46,7 @@
         },
         "/next_item": {
             "post": {
-                "summary": "Record user response",
+                "summary": "Record user response and calculate updated theta estimate, 'old scale' score, and continuance indicator. \n\nNOTE: The example estimate and score are not accurate for the model - they serve as a quick example only. For accurate tests, use the live API results.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -67,12 +67,21 @@
                                             "type": "number",
                                             "example": 2.13
                                         },
+                                        "score": {
+                                            "type": "number",
+                                            "example": 1.12
+                                        },
                                         "se": {
                                             "type": "number",
                                             "example": 0.451
                                         }
                                     },
-                                    "required": ["completed", "estimate", "se"]
+                                    "required": [
+                                        "completed",
+                                        "estimate",
+                                        "se",
+                                        "score"
+                                    ]
                                 }
                             }
                         }
