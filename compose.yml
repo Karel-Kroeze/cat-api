@@ -12,3 +12,4 @@ services:
       - VIRTUAL_HOST=cat-api.home.karel-kroeze.nl
       - LETSENCRYPT_HOST=cat-api.home.karel-kroeze.nl
       - LETSENCRYPT_EMAIL=karel.kroeze@gmail.com
+    restart: unless-stopped
