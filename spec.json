@@ -26,7 +26,7 @@
                     {
                         "name": "estimate",
                         "in": "query",
-                        "description": "𝜃 estimate, as returned by `next_item`",
+                        "description": "Theta (𝜃) estimate, as returned by `next_item`",
                         "required": true,
                         "schema": {
                             "type": "number"
@@ -40,13 +40,81 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "background",
+                        "in": "query",
+                        "description": "Background colour of the main panel\n\n_named colour, hex rgb colour, or _transparent_._",
+                        "schema": {
+                            "$ref": "#/components/schemas/Colour",
+                            "default": "transparent"
+                        },
+                        "example": "transparent"
+                    },
+                    {
+                        "name": "fill_colour",
+                        "in": "query",
+                        "description": "Fill colour of dots.\n\n_named colour, hex rgb colour, or _transparent_._",
+                        "schema": {
+                            "$ref": "#/components/schemas/Colour",
+                            "default": "#ffab06"
+                        },
+                        "example": "#ffab06"
+                    },
+                    {
+                        "name": "stroke_colour",
+                        "in": "query",
+                        "description": "Outline (stroke) colour of dots.\n\n_named colour, hex rgb colour, or _transparent_._",
+                        "schema": {
+                            "$ref": "#/components/schemas/Colour",
+                            "default": "#ffffff"
+                        },
+                        "example": "#ffffff"
+                    },
+                    {
+                        "name": "cutoffs",
+                        "in": "query",
+                        "description": "Vector of `y` (𝜃) coordinates for horizontal guide lines.",
+                        "schema": {
+                            "type": "array",
+                            "items": { "type": "number" },
+                            "uniqueItems": true,
+                            "minItems": 0,
+                            "maxItems": 999,
+                            "default": [-1.5, -0.4, 0.54, 1.83]
+                        }
+                    },
+                    {
+                        "name": "range",
+                        "in": "query",
+                        "description": "Vector of minimum and maxium coordinate of `y` (𝜃) scale.",
+                        "schema": {
+                            "type": "array",
+                            "items": { "type": "number" },
+                            "uniqueItems": true,
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "default": [-3, 3]
+                        }
+                    },
+                    {
+                        "name": "points",
+                        "in": "query",
+                        "description": "Number of points to be drawn.",
+                        "schema": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 999,
+                            "default": 20
+                        }
                     }
                 ]
             }
         },
         "/next_item": {
             "post": {
-                "summary": "Record user response and calculate updated theta estimate, 'old scale' score, and continuance indicator. \n\nNOTE: The example estimate and score are not accurate for the model - they serve as a quick example only. For accurate tests, use the live API results.",
+                "summary": "Calculate updated theta estimate and best next item",
+                "description": "Calculates theta estimate, standard error and scaled score based on current responses. Returns estimates, most appropriate next item (if applicable), and an indicator for test completeness.\n\n**NOTE**: The example estimate and score are not accurate for the model - they serve as a quick example only. For accurate tests, use the `Try it out` function to get live API results.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -154,6 +222,25 @@
                     "item_id": 3,
                     "response": 2
                 }
+            },
+            "Colour": {
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "example": "transparent",
+                        "description": "special value for a transparent (0% opacity) colour."
+                    },
+                    {
+                        "type": "string",
+                        "example": "red, steelblue, gray",
+                        "description": "named colour. R has a list of rougly 650 defined colors. See the `colors()` function in R, or <http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf> for a complete list."
+                    },
+                    {
+                        "type": "string",
+                        "example": "#FFFFFF, #000000, #FF0000",
+                        "description": "RGB colour in hex format.\n\nSee <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool> for a colour picker and more information. \n\n<div class='info'>\n\n>NOTE: R does not support opacity in hex colours, e.g. `#ffffff80` (white with ~50% opacity) will be rendered as `#ffffff` (fully opaque white).</div><div class='info'>\n\n>NOTE: Remember that `#` should be URI-encoded to `%23` when manually crafting requests (e.g., `...?background=%23ffffff`).</div>"
+                    }
+                ]
             }
         }
     }
