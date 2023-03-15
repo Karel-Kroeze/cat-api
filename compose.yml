@@ -1,5 +1,7 @@
 services:
   api:
     build: .
-    image: karelkroeze/fluffy:cat-api
+    image: karelkroeze/fluffy:cat-api-multiarch
     restart: unless-stopped
+    ports: 
+      - 4321:4321
