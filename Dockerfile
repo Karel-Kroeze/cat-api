@@ -15,6 +15,6 @@ COPY data ./data
 COPY R ./R
 COPY spec.json .
 
-EXPOSE 4321
+EXPOSE 80
 
 CMD ["Rscript", "./R/run.R"]
